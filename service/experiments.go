@@ -11,11 +11,11 @@ import (
 var cb *circuit.Breaker
 var httpClient *circuit.HTTPClient
 
-func SetupFooCircuitBreaker() {
+func SetupExpCircuitBreaker() {
 	httpClient, cb = network.GetHttpClient()
 }
 
-func CreateFoo() {
+func CreateExp() {
 	if cb.Ready() {
 		resp, err := httpClient.Post("http://cloud-ml-experiments-manager.cloud-ml-experiments:8082/exp", "", nil)
 		if err != nil {

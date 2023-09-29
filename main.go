@@ -10,7 +10,7 @@ import (
 
 func main() {
 	log.SetFlags(0)
-	service.SetupFooCircuitBreaker()
+	service.SetupExpCircuitBreaker()
 	for {
 		nc, err := nats.Connect("nats://nats.cloud-ml-mgmt:4222")
 		if err != nil {
@@ -21,11 +21,11 @@ func main() {
 		wg := sync.WaitGroup{}
 		wg.Add(1)
 
-		if _, err := nc.Subscribe("foo", func(m *nats.Msg) {
+		if _, err := nc.Subscribe("exp", func(m *nats.Msg) {
 			log.Printf("Reply: %s", m.Data)
 			msg := string(m.Data[:])
 			if msg == "create" {
-				service.CreateFoo()
+				service.CreateExp()
 			} else if msg == "delete " {
 				log.Println("Deleted")
 			}
